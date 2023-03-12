@@ -7,6 +7,8 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebView;
+import android.widget.Button;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -15,6 +17,8 @@ import java.util.Map;
 
 public class ResultFragment extends Fragment {
 
+    Button again;
+    WebView webView;
     TextView resultsField;
 
     HashMap<String, Integer> results = new HashMap<>() {{
@@ -43,12 +47,27 @@ public class ResultFragment extends Fragment {
         results = (HashMap<String, Integer>) getArguments().getSerializable("results");
     }
 
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_result, container, false);
 
         resultsField = view.findViewById(R.id.results);
+        webView = view.findViewById(R.id.web_view);
+        again = view.findViewById(R.id.again);
+
+        webView.loadUrl("file:///android_asset/results.html");
+
+        again.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                QuestionFragment questionFragment = new QuestionFragment();
+                requireActivity().getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.container, questionFragment)
+                        .commit();
+            }
+        });
 
         ArrayList<HashMap.Entry> entries = new ArrayList<>(results.entrySet());
         for (HashMap.Entry entry : entries) {
@@ -59,4 +78,5 @@ public class ResultFragment extends Fragment {
 
         return view;
     }
+
 }

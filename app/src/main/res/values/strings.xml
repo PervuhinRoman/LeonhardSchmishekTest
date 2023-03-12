@@ -4,4 +4,5 @@
     <string name="button_no">Нет</string>
     <string name="button_yes">Да</string>
     <string name="results_title">Результаты:</string>
+    <string name="again">Пройти заново</string>
 </resources>
